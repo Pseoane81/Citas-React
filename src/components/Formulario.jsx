@@ -2,6 +2,7 @@ import { useState, useEffect } from "react"
 import Error from "./Error";
 
 
+
 const Formulario = ({pacientes, setPacientes}) => {
     const [nombre, setNombre] = useState("");
     const [propietario, setPropietario] = useState("");
@@ -10,6 +11,12 @@ const Formulario = ({pacientes, setPacientes}) => {
     const [sintomas, setSintomas] = useState("");
     const [error, setError] = useState(false);
 
+    const generarid = () => {
+        const random = Math.random().toString(36)
+        const fecha = Date.now().toString(36)
+    
+        return random + fecha
+    }
 
     const handleSubmit = (e) => {
         e.preventDefault(); 
@@ -28,7 +35,8 @@ const Formulario = ({pacientes, setPacientes}) => {
             propietario,
             email,
             fecha,
-            sintomas
+            sintomas,
+            id: generarid()
         }
         
         //console.log(objetoPacientes)
@@ -57,7 +65,7 @@ const Formulario = ({pacientes, setPacientes}) => {
                     className="bg-white shadow-md rounded-lg py-10 px-5 mb-10 mx-5">
                 {error && < Error > <p>Todos los comapos son obligatorios</p></Error>}
                 <div className="mb-5">
-                    <label htmlfor="mascota" className="block text-gray-700 uppercase font-bold">Nombre Mascota</label>
+                    <label htmlFor="mascota" className="block text-gray-700 uppercase font-bold">Nombre Mascota</label>
                     <input id="mascota" type="text"
                     placeholder="Nombre Mascota"
                     className="border-2 w-full p-2 mt-2 placeholder-gray-400 rounded-md"
@@ -67,7 +75,7 @@ const Formulario = ({pacientes, setPacientes}) => {
                 </div>
 
                 <div className="mb-5">
-                    <label htmlfor="propietario" className="block text-gray-700 uppercase font-bold">Nombre Propietario</label>
+                    <label htmlFor="propietario" className="block text-gray-700 uppercase font-bold">Nombre Propietario</label>
                     <input id="propietario" type="text"
                     placeholder="Nombre Propietario"
                     className="border-2 w-full p-2 mt-2 placeholder-gray-400 rounded-md"
@@ -77,7 +85,7 @@ const Formulario = ({pacientes, setPacientes}) => {
                 </div>
 
                 <div className="mb-5">
-                    <label htmlfor="email" className="block text-gray-700 uppercase font-bold">Email</label>
+                    <label htmlFor="email" className="block text-gray-700 uppercase font-bold">Email</label>
                     <input id="email" type="email"
                     placeholder="email"
                     className="border-2 w-full p-2 mt-2 placeholder-gray-400 rounded-md"
@@ -87,7 +95,7 @@ const Formulario = ({pacientes, setPacientes}) => {
                 </div>
 
                 <div className="mb-5">
-                    <label htmlfor="alta" className="block text-gray-700 uppercase font-bold">Alta</label>
+                    <label htmlFor="alta" className="block text-gray-700 uppercase font-bold">Alta</label>
                     <input id="alta" type="date"
                     className="border-2 w-full p-2 mt-2 placeholder-gray-400 rounded-md"
                     value={fecha} 
@@ -96,7 +104,7 @@ const Formulario = ({pacientes, setPacientes}) => {
                 </div>
 
                 <div className="mb-5">
-                    <label htmlfor="sintomas" className="block text-gray-700 uppercase font-bold">Sintomas</label>
+                    <label htmlFor="sintomas" className="block text-gray-700 uppercase font-bold">Sintomas</label>
                     <textarea id="sintomas" className="border-2 w-full p-2 mt-2 placeholder-gray-400 rounded-md" placeholder="Describe los Sistomas"
                     value={sintomas} 
                     onChange={ (e)=> setSintomas(e.target.value) }

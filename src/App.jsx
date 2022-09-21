@@ -8,9 +8,7 @@ function App() {
   
   return (
     <div className="conteiner mx-auto mt-20">
-      <Header 
-      
-      />
+      <Header/>
       <div className="mt-12 md:flex">
       <Formulario
         pacientes = {pacientes}
