@@ -3,13 +3,24 @@ import Error from "./Error";
 
 
 
-const Formulario = ({pacientes, setPacientes}) => {
+const Formulario = ({pacientes, setPacientes, paciente, setPaciente}) => {
     const [nombre, setNombre] = useState("");
     const [propietario, setPropietario] = useState("");
     const [email, setEmail] = useState("");
     const [fecha, setFecha] = useState("");
     const [sintomas, setSintomas] = useState("");
     const [error, setError] = useState(false);
+
+    useEffect(()=> {
+        if(Object.keys(paciente).length > 0) {
+            setNombre(paciente.nombre)
+            setPropietario(paciente.propietario)
+            setEmail(paciente.email)
+            setFecha(paciente.fecha)
+            setSintomas(paciente.sintomas)
+        } 
+    },[paciente])
+
 
     const generarid = () => {
         const random = Math.random().toString(36)
@@ -38,10 +49,22 @@ const Formulario = ({pacientes, setPacientes}) => {
             sintomas,
             id: generarid()
         }
-        
-        //console.log(objetoPacientes)
 
-        setPacientes([...pacientes, objetoPacientes])
+        if (paciente.id){
+            //editando registro
+            objetoPacientes.id = paciente.id
+            const pacientesActualiados = pacientes.map(pacienteState => pacienteState.id == paciente.id
+                ? objetoPacientes : pacienteState)
+
+            setPacientes(pacientesActualiados)
+            setPaciente({})
+        } else {
+            // nuevo registro
+            objetoPacientes.id = generarid()
+            setPacientes([...pacientes, objetoPacientes])
+        }
+        
+        
 
         // reiniciar el Form
         setNombre("")
@@ -111,7 +134,9 @@ const Formulario = ({pacientes, setPacientes}) => {
                     />
                 </div>
 
-                <input type="submit" className="bg-indigo-600 w-full p-3 text-white uppercase font-bold hover:bg-indigo-700 cursor-pointer transition-all" value="Agregar Paciente" />
+                <input type="submit" 
+                        className="bg-indigo-600 w-full p-3 text-white uppercase font-bold hover:bg-indigo-700 cursor-pointer transition-all" 
+                        value={ paciente.id ? "Editar Paciente" : "Agregar Paciente" } />
             </form>
 
 
